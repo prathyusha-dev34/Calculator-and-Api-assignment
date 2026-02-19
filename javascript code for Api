@@ -1,0 +1,41 @@
+const container = document.querySelector(".product-container");
+const errorMessage = document.querySelector(".error-message");
+
+fetch("https://fakestoreapi.com/products")
+
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to fetch products");
+        }
+        return response.json();
+    })
+
+    .then(data => {
+
+        data.forEach(product => {
+
+            // Create product card
+            const productDiv = document.createElement("div");
+            productDiv.classList.add("product");
+
+            // Create title
+            const title = document.createElement("h4");
+            title.innerText = product.title;
+
+            // Create image
+            const image = document.createElement("img");
+            image.src = product.image;
+
+            // Append elements
+            productDiv.appendChild(title);
+            productDiv.appendChild(image);
+
+            container.appendChild(productDiv);
+
+        });
+
+    })
+
+    .catch(error => {
+        errorMessage.innerText = error.message;
+    });
